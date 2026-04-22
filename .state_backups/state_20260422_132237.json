@@ -1,0 +1,62 @@
+{
+  "last_step": "pm",
+  "completed_steps": [
+    "pm",
+    "ba",
+    "researcher",
+    "architect"
+  ],
+  "tasks": [
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ],
+    [
+      "agent",
+      "description"
+    ]
+  ],
+  "task_index": 0,
+  "timestamp": "2026-04-22T08:17:31.862363+00:00",
+  "version": 2
+}

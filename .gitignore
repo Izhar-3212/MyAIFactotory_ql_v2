@@ -1,0 +1,29 @@
+﻿# Navigate to project root
+cd "D:\Syed Izhar Data\MyAI-Factory\QwenLogic\specforge"
+
+# Create/update .gitignore (prevents pushing secrets/outputs)
+@"
+# Generated outputs & state
+outputs/
+orchestrator_state.json
+orchestrator_context.md
+*.tmp
+
+# Environment & secrets (NEVER commit these)
+.env
+.env.*
+!.env.example
+
+# Python & venv
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.pyc
+
+# OS / IDE
+.DS_Store
+.vscode/
+*.log
+"@ | Out-File -FilePath ".gitignore" -Encoding utf8
+Write-Host "✅ .gitignore ready" -ForegroundColor Green
