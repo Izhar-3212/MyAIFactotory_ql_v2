@@ -40,6 +40,6 @@ def main():
     try:
         while all(p.poll() is None for _, p in procs): time.sleep(0.5)
     except KeyboardInterrupt:
-        print("\nStopping..."); [p.terminate() for _, p in procs]; [p.wait(timeout=3600) for _, p in procs]
+        print("\nStopping..."); [p.terminate() for _, p in procs]; [p.wait(timeout=3) for _, p in procs]
 
 if __name__ == "__main__": main()

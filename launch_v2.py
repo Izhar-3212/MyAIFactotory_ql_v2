@@ -1,0 +1,109 @@
+﻿# Add this function at the top of launch_v2.py
+def find_free_port(start_port, max_attempts=10):
+    import socket
+    for port in range(start_port, start_port + max_attempts):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            try:
+                s.bind(("0.0.0.0", port))
+                return port
+            except OSError:
+                continue
+    return start_port  # Fallback
+#!/usr/bin/env python3
+"""
+AI Factory v2: VS Code Integrated Launcher
+Runs all services in background within VS Code workspace (no popup windows)
+"""
+import subprocess, sys, time, json, os, signal
+from pathlib import Path
+
+def launch_service(name, cwd, port, env_extra=None):
+    env = os.environ.copy()
+    env["SERVICE_PORT"] = str(port)
+    env["PYTHONUNBUFFERED"] = "1"
+    if env_extra:
+        env.update(env_extra)
+    return subprocess.Popen(
+        [sys.executable, "main.py"],
+        cwd=cwd,
+        env=env,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        bufsize=1
+    )
+
+def main():
+    config_path = Path("services/config.json")
+    if not config_path.exists():
+        print("❌ services/config.json not found")
+        return
+
+    with open(config_path, encoding="utf-8") as f:
+        config = json.load(f)
+
+    procs = []
+    print(f"\n🚀 AI Factory v2 — VS Code Integrated Mode")
+    print("=" * 60)
+
+    for svc in config["services"]:
+        port = config["ports"].get(svc, 8000)
+        svc_dir = Path(f"services/{svc}-service")
+        if not svc_dir.exists():
+            print(f"⚠️  Skip {svc}: not found")
+            continue
+        print(f"   → {svc:20} port {port} (background)")
+        proc = launch_service(svc, svc_dir, port)
+        procs.append((svc, proc, port))
+        time.sleep(0.3)
+
+    orch_dir = Path("orchestrator-api")
+    if orch_dir.exists():
+        print(f"   → {'orchestrator':20} port 8000 (background)")
+        proc = launch_service("orchestrator", orch_dir, 8000)
+        procs.append(("orchestrator", proc, 8000))
+
+    print("\n" + "=" * 60)
+    print(f"✅ Launched {len(procs)} services in background")
+    print("\n📋 Test URLs:")
+    for name, _, port in procs:
+        print(f"   curl.exe http://localhost:{port}/health")
+    print("\n💡 Open new VS Code terminals (Ctrl+Shift+` → +) to test")
+    print("🛑 Press Ctrl+C here to stop all services")
+    print("=" * 60 + "\n")
+
+    try:
+        startup_count = 0
+        while startup_count < len(procs):
+            for name, proc, port in procs:
+                if proc.poll() is not None:
+                    output = proc.stdout.read()
+                    print(f"\n❌ {name} exited (code {proc.returncode})")
+                    if output: print(f"   Output: {output[-300:]}")
+                    return
+                line = proc.stdout.readline()
+                if line and "running on" in line.lower():
+                    print(f"   ✅ {name}: {line.strip()}")
+                    startup_count += 1
+            time.sleep(0.2)
+
+        print("\n🎉 All services started successfully!")
+        while True:
+            time.sleep(1)
+            for name, proc, _ in procs:
+                if proc.poll() is not None:
+                    print(f"\n⚠️  {name} exited unexpectedly")
+                    return
+    except KeyboardInterrupt:
+        print("\n\n🛑 Shutting down...")
+        for name, proc, _ in procs:
+            print(f"   Stopping {name}...")
+            proc.terminate()
+            try: proc.wait(timeout=3600)
+            except: proc.kill()
+        print("✅ All stopped")
+
+if __name__ == "__main__":
+    if os.name == "nt":
+        signal.signal(signal.SIGINT, lambda s, f: sys.exit(0))
+    main()

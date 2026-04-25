@@ -1,0 +1,117 @@
+﻿#!/usr/bin/env python3
+"""
+AI Factory v2: Orchestrator API
+Routes requests to selected agent services + aggregates billing
+"""
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import List, Optional, Dict
+import httpx, logging, uuid
+from datetime import datetime
+
+app = FastAPI(title="AI Factory Orchestrator", version="2.0.0")
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
+
+# Service registry (update ports if you changed them)
+SERVICES = {
+    "researcher": "http://localhost:8120",
+    "ba": "http://localhost:8121",
+    "architect": "http://localhost:8122",
+    "pm": "http://localhost:8123",
+    "backend_coder": "http://localhost:8124",
+    "frontend_coder": "http://localhost:8125",
+    "qa_tester": "http://localhost:8126"
+}
+
+class ProjectRequest(BaseModel):
+    project_idea: str = Field(..., min_length=10)
+    selected_agents: List[str] = Field(..., min_items=1)
+    domain: Optional[str] = "software-dev"
+    customer_id: Optional[str] = None
+    preferences: Optional[Dict] = {}
+
+class ProjectResponse(BaseModel):
+    project_id: str
+    status: str
+    outputs: Dict[str, str]
+    total_billing: Dict
+    timestamp: str
+
+@app.get("/health")
+async def health():
+    return {"status": "healthy", "service": "orchestrator", "version": "2.0.0", "timestamp": datetime.utcnow().isoformat()}
+
+@app.get("/services")
+async def list_services():
+    """List available agent services with health status"""
+    available = []
+    async with httpx.AsyncClient(timeout=3) as client:
+        for name, url in SERVICES.items():
+            try:
+                resp = await client.get(f"{url}/health")
+                available.append({"name": name, "url": url, "status": "online" if resp.status_code == 200 else "offline"})
+            except:
+                available.append({"name": name, "url": url, "status": "offline"})
+    return {"services": available}
+
+@app.post("/run", response_model=ProjectResponse)
+async def run_project(req: ProjectRequest):
+    """Run selected agents on project idea and aggregate results"""
+    project_id = f"proj_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+    outputs = {}
+    total_billing = {"base_fees": 0, "usage_fees": 0, "total_cost": 0}
+    
+    logger.info(f"[{project_id}] Starting with agents: {req.selected_agents}")
+    
+    async with httpx.AsyncClient(timeout=300) as client:
+        for agent in req.selected_agents:
+            if agent not in SERVICES:
+                raise HTTPException(status_code=400, detail=f"Unknown agent: {agent}")
+            
+            service_url = SERVICES[agent]
+            try:
+                response = await client.post(
+                    f"{service_url}/run",
+                    json={
+                        "project_idea": req.project_idea,
+                        "domain": req.domain,
+                        "depth": "standard",
+                        "customer_id": req.customer_id
+                    }
+                )
+                if response.status_code != 200:
+                    raise HTTPException(status_code=500, detail=f"Agent {agent} failed: {response.text[:200]}")
+                
+                result = response.json()
+                outputs[agent] = result.get("output", "")
+                
+                # Accumulate billing
+                if result.get("billing"):
+                    total_billing["base_fees"] += result["billing"]["base_fee"]
+                    total_billing["usage_fees"] += result["billing"]["usage_fee"]
+                    total_billing["total_cost"] += result["billing"]["total_cost"]
+                
+                logger.info(f"[{project_id}] {agent} completed - ${result['billing']['total_cost']:.4f}")
+                
+            except Exception as e:
+                logger.error(f"[{project_id}] {agent} failed: {str(e)}")
+                outputs[agent] = f"ERROR: {str(e)[:200]}"
+    
+    return ProjectResponse(
+        project_id=project_id,
+        status="completed",
+        outputs=outputs,
+        total_billing={
+            "base_fees": round(total_billing["base_fees"], 2),
+            "usage_fees": round(total_billing["usage_fees"], 2),
+            "total_cost": round(total_billing["total_cost"], 2),
+            "currency": "USD"
+        },
+        timestamp=datetime.utcnow().isoformat()
+    )
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+

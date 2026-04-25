@@ -1,0 +1,152 @@
+[
+  {
+    "timestamp": "2026-04-24T18:26:43.513789",
+    "customer_id": "cust_123",
+    "service": "researcher",
+    "tokens": 636,
+    "duration_seconds": 63.93,
+    "request_id": "d376061c-6747-45e2-bb4f-c8e8f9cc693e",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0636,
+      "time_cost": 0.6393,
+      "usage_fee": 0.7029,
+      "total_cost": 2.7029
+    }
+  },
+  {
+    "timestamp": "2026-04-24T18:46:40.796833",
+    "customer_id": "test_123",
+    "service": "researcher",
+    "tokens": 525,
+    "duration_seconds": 63.73,
+    "request_id": "05fcb294-ed36-4c2b-9e89-009485f0621f",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0525,
+      "time_cost": 0.6373,
+      "usage_fee": 0.6898,
+      "total_cost": 2.6898
+    }
+  },
+  {
+    "timestamp": "2026-04-24T18:51:23.582276",
+    "customer_id": "test_123",
+    "service": "researcher",
+    "tokens": 655,
+    "duration_seconds": 69.88,
+    "request_id": "725bd552-c823-4f90-b464-bf94121f9515",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0655,
+      "time_cost": 0.6988,
+      "usage_fee": 0.7643,
+      "total_cost": 2.7643
+    }
+  },
+  {
+    "timestamp": "2026-04-24T18:56:38.268661",
+    "customer_id": "test_123",
+    "service": "researcher",
+    "tokens": 586,
+    "duration_seconds": 59.48,
+    "request_id": "ad7670a2-8e1a-496d-a90d-2b672ff40084",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0586,
+      "time_cost": 0.5948,
+      "usage_fee": 0.6534,
+      "total_cost": 2.6534
+    }
+  },
+  {
+    "timestamp": "2026-04-24T19:20:11.304656",
+    "customer_id": "cust_456",
+    "service": "researcher",
+    "tokens": 718,
+    "duration_seconds": 74.33,
+    "request_id": "ac2d9586-bbd8-4492-8414-43b0545fea35",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0718,
+      "time_cost": 0.7433,
+      "usage_fee": 0.8151,
+      "total_cost": 2.8151
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:27:30.030586",
+    "customer_id": "cust_sqlite_test",
+    "service": "researcher",
+    "tokens": 680,
+    "duration_seconds": 67.59,
+    "request_id": "ea78c394-22ef-493d-ba82-9301246e58b0",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.068,
+      "time_cost": 0.6759,
+      "usage_fee": 0.7439,
+      "total_cost": 2.7439
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:34:58.368330",
+    "customer_id": "cust_sqlite_test",
+    "service": "researcher",
+    "tokens": 671,
+    "duration_seconds": 72.99,
+    "request_id": "88854be6-7e02-45a0-8d92-d8ebca342ca8",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0671,
+      "time_cost": 0.7299,
+      "usage_fee": 0.797,
+      "total_cost": 2.797
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:45:17.678553",
+    "customer_id": "cust_sqlite_test",
+    "service": "researcher",
+    "tokens": 561,
+    "duration_seconds": 63.16,
+    "request_id": "f8c765d3-c0eb-4fbe-b352-cd757624f625",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0561,
+      "time_cost": 0.6316,
+      "usage_fee": 0.6877,
+      "total_cost": 2.6877
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:52:43.427664",
+    "customer_id": "cust_sqlite_test",
+    "service": "researcher",
+    "tokens": 672,
+    "duration_seconds": 69.69,
+    "request_id": "10131c60-1808-4a8f-9134-80560ba93072",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0672,
+      "time_cost": 0.6969,
+      "usage_fee": 0.7641,
+      "total_cost": 2.7641
+    }
+  },
+  {
+    "timestamp": "2026-04-24T22:30:23.115141",
+    "customer_id": "cust_final_test",
+    "service": "researcher",
+    "tokens": 581,
+    "duration_seconds": 58.8,
+    "request_id": "2580b019-caf0-483e-98e5-c1a214545a4d",
+    "billing": {
+      "base_fee": 2.0,
+      "token_cost": 0.0581,
+      "time_cost": 0.588,
+      "usage_fee": 0.6461,
+      "total_cost": 2.6461
+    }
+  }
+]

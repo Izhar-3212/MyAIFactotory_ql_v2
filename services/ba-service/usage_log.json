@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2026-04-24T19:21:45.698087",
+    "customer_id": "cust_456",
+    "service": "ba",
+    "tokens": 826,
+    "duration_seconds": 94.1,
+    "request_id": "43d12d82-8ebe-48ae-957d-fff850d6d59d",
+    "billing": {
+      "base_fee": 1.5,
+      "token_cost": 0.0826,
+      "time_cost": 0.941,
+      "usage_fee": 1.0236,
+      "total_cost": 2.5236
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:29:03.650636",
+    "customer_id": "cust_sqlite_test",
+    "service": "ba",
+    "tokens": 848,
+    "duration_seconds": 93.36,
+    "request_id": "69283937-f2de-4088-beca-fc28f89ad0cb",
+    "billing": {
+      "base_fee": 1.5,
+      "token_cost": 0.0848,
+      "time_cost": 0.9336,
+      "usage_fee": 1.0184,
+      "total_cost": 2.5184
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:36:34.640048",
+    "customer_id": "cust_sqlite_test",
+    "service": "ba",
+    "tokens": 766,
+    "duration_seconds": 96.01,
+    "request_id": "f82f5d4a-ba6f-4092-9725-4c406d682f45",
+    "billing": {
+      "base_fee": 1.5,
+      "token_cost": 0.0766,
+      "time_cost": 0.9601,
+      "usage_fee": 1.0367,
+      "total_cost": 2.5367
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:46:44.265510",
+    "customer_id": "cust_sqlite_test",
+    "service": "ba",
+    "tokens": 737,
+    "duration_seconds": 86.32,
+    "request_id": "f0be1972-a503-4902-980c-983d5d96d9b3",
+    "billing": {
+      "base_fee": 1.5,
+      "token_cost": 0.0737,
+      "time_cost": 0.8632,
+      "usage_fee": 0.9369,
+      "total_cost": 2.4369
+    }
+  },
+  {
+    "timestamp": "2026-04-24T21:53:58.309767",
+    "customer_id": "cust_sqlite_test",
+    "service": "ba",
+    "tokens": 618,
+    "duration_seconds": 74.61,
+    "request_id": "b4ca9e9e-4b57-4ecb-bdad-ff665f7f68e2",
+    "billing": {
+      "base_fee": 1.5,
+      "token_cost": 0.0618,
+      "time_cost": 0.7461,
+      "usage_fee": 0.8079,
+      "total_cost": 2.3079
+    }
+  },
+  {
+    "timestamp": "2026-04-24T22:31:16.678888",
+    "customer_id": "cust_final_test",
+    "service": "ba",
+    "tokens": 507,
+    "duration_seconds": 53.31,
+    "request_id": "0c2a1263-25b1-426d-8b47-45ccc45018a7",
+    "billing": {
+      "base_fee": 1.5,
+      "token_cost": 0.0507,
+      "time_cost": 0.5331,
+      "usage_fee": 0.5838,
+      "total_cost": 2.0838
+    }
+  }
+]

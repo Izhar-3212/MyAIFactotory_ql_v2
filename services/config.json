@@ -1,0 +1,20 @@
+{
+  "services": [
+    "researcher",
+    "ba",
+    "architect",
+    "pm",
+    "backend_coder",
+    "frontend_coder",
+    "qa_tester"
+  ],
+  "ports": {
+    "researcher": 8120,
+    "ba": 8121,
+    "architect": 8122,
+    "pm": 8123,
+    "backend_coder": 8124,
+    "frontend_coder": 8125,
+    "qa_tester": 8126
+  }
+}
